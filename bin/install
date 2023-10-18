@@ -71,8 +71,6 @@ get_download_url() {
 	echo "https://github.com/${github_coordinates}/releases/download/v${version}/$(get_release_filename "$version")"
 }
 
-echo "Platform $(uname -a)"
-
 tmp_download_dir="$(mktemp -d -t 'asdf_XXXXXXXX')"
 trap 'rm -rf "${tmp_download_dir}"' EXIT
 install_tool "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH" "$tmp_download_dir"
