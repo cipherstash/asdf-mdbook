@@ -46,7 +46,13 @@ get_platform() {
 	if [ "$(uname)" = "Linux" ]; then
 		echo "$(uname -m)-unknown-linux-gnu"
 	elif [ "$(uname)" = "Darwin" ]; then
-		echo "$(uname -m)-apple-darwin"
+		# mdbook does not have the binary for arm64
+		# we fallback to the x86_64 arch because it's working well with rosetta
+		if [ "$(uname -m)" = "arm64" ]; then
+			echo "x86_64-apple-darwin"
+		else
+			echo "$(uname -m)-apple-darwin"
+		fi
 	else
 		echo "Unknown or unsupported machine name '$(uname)'" >&2
 		exit 1
